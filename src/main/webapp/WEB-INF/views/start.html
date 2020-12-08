@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>My app</title>
+</head>
+<style>
+    .cell {display:table-cell;
+        border-right: 1px solid #000000;
+        border-bottom: 1px solid #000000;
+        width: 30px; height: 30px;
+    }
+    .cell-ship {display:table-cell;
+        background: blue;
+        border-right: 1px solid #000000;
+        border-bottom: 1px solid #000000;
+        width: 30px; height: 30px;
+    }
+    .row {
+        display:table-row;
+        clear: both;
+        overflow: hidden;
+    }
+    .table {
+        display:table;
+        border-left: 1px solid #000000;
+        border-top: 1px solid #000000;
+        display:table;
+    }
+</style>
+
+<body>
+
+Player 1 name:<p th:text = "${p1name}"/>
+Player 2 name:<p th:text = "${p2name}"/>
+
+
+    <!--/*@thymesVar id="cellGrid" type="com.verzakov.Battleships.Cell"*/-->
+<div class="table">
+    <div class="row" th:each="row: ${cellGrid}">
+        <div class="cell" th:each="cell: ${row}" th:text="${cell.getXY()}" th:id="${cell.getXY()}">
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
