@@ -23,6 +23,123 @@ public class Cell {
         return posX+"_"+posY;
     }
 
+    public String getStatus(){
+        if(isShot()){
+            if(isContainShip())
+                return "shot";
+            else
+                return "miss";
+        } else {
+            if(isContainShip())
+                return "ship";
+            else
+                return "empty";
+        }
+    }
+
+    public Boolean canPlace(int size, int direction) { //direction 0-UP, 1-RIGHT, 2-DOWN, 3-LEFT
+        if(checkPlace()){
+            if(size>1){
+                for (Cell neiCell: neighbours) {
+                    switch(direction) {
+                        case 0:
+                            if(neiCell.getPosX() == posX && neiCell.getPosY() == posY-1) {
+                                return neiCell.canPlace(size-1, direction);
+                            }
+                            break;
+                        case 1:
+                            if(neiCell.getPosX() == posX+1 && neiCell.getPosY() == posY) {
+                                return neiCell.canPlace(size-1, direction);
+                            }
+                            break;
+                        case 2:
+                            if(neiCell.getPosX() == posX && neiCell.getPosY() == posY+1) {
+                                return neiCell.canPlace(size-1, direction);
+                            }
+                            break;
+                        case 3:
+                            if(neiCell.getPosX() == posX-1 && neiCell.getPosY() == posY) {
+                                return neiCell.canPlace(size-1, direction);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int getPosX() {
+        return posX;
+    }
+
+    public int getPosY() {
+        return posY;
+    }
+
+    public boolean isShot() {
+        return shot;
+    }
+
+    public void setShot(boolean shot) {
+        this.shot = shot;
+    }
+
+    public Ship getShip() {
+        return this.ship;
+    }
+
+    public void setShip(Ship ship) {
+        this.ship = ship;
+    }
+
+    public boolean isContainShip() {
+        if(ship!=null){
+            return true;
+        }
+        return false;
+    }
+
+    public List<Cell> getNeighbours() {
+        return neighbours;
+    }
+
+    public boolean checkPlace(){
+        if (this.isContainShip())
+            return false;
+        for (Cell neighbourCell: neighbours) {
+            if(neighbourCell.isContainShip())
+                return false;
+        }
+        return true;
+    }
+
+    public void fillDiagonal(){
+        for (Cell neiCell: neighbours) {
+            if ((neiCell.getPosX() == posX-1 && neiCell.getPosY() == posY-1) ||
+                    (neiCell.getPosX() == posX+1 && neiCell.getPosY() == posY-1) ||
+                    (neiCell.getPosX() == posX-1 && neiCell.getPosY() == posY+1) ||
+                    (neiCell.getPosX() == posX+1 && neiCell.getPosY() == posY+1)){
+                neiCell.setShot(true);
+            }
+        }
+    }
+
+    public boolean isPossibleShip(){
+        if(!isShot()){
+            for (Cell neiCell: neighbours) {
+                if(neiCell.isShot() && neiCell.isContainShip()){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public void fillNeighbours(){
         if(posX>0) {
             this.field.getCellGrid()[posX - 1][posY].getNeighbours().add(this);
@@ -46,7 +163,8 @@ public class Cell {
             this.field.getCellGrid()[posX][posY + 1].getNeighbours().add(this);
         }
     }
-    public List<Cell> getNeighbours() {
-        return neighbours;
-    }
+
+
+
+
 }

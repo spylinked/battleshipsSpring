@@ -10,8 +10,8 @@ public class Human implements Player{
     }
 
     @Override
-    public void Shoot() {
-
+    public int shoot(Player player) {
+        return 0;
     }
 
     @Override
@@ -21,5 +21,10 @@ public class Human implements Player{
 
     public BattleField getField() {
         return field;
+    }
+
+    @Override
+    public void placeShips() {
+
     }
 }

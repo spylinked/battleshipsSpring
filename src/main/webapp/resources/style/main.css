@@ -1,0 +1,48 @@
+.cell {display:table-cell;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    width: 2em; height: 2em;
+}
+.ship {background: blue;
+}
+.shot {background: red;
+}
+.shot {miss: grey;
+}
+.row {
+    display:table-row;
+    clear: both;
+    overflow: hidden;
+}
+.table {
+    display:table;
+    border-left: 1px solid #000000;
+    border-top: 1px solid #000000;
+}
+.table-wrapper {
+    display:inline-block;
+    border-left: 1px solid #000000;
+    border-top: 1px solid #000000;
+}
+.port {
+    display:inline-block;
+    border-left: 1px solid #000000;
+    border-top: 1px solid #000000;
+}
+.port-ship {
+    position: relative;
+    margin: 1.26em .7em;
+    float: left;
+    border: 1px dotted #b2b2b9;
+    height: 2em;
+}
+.ship-box {
+    z-index: 2;
+    left: 0;
+    top: 0;
+    border: 2px solid #00f;
+    background: rgba(0,0,255,.05);
+    position: absolute!important;
+    margin: -2px;
+    height: 2em;
+}
