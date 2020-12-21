@@ -36,6 +36,16 @@ public class Cell {
                 return "empty";
         }
     }
+    public String getRivalStatus(){
+        if(isShot()){
+            if(isContainShip())
+                return "shot";
+            else
+                return "miss";
+        } else {
+                return "empty";
+        }
+    }
 
     public Boolean canPlace(int size, int direction) { //direction 0-UP, 1-RIGHT, 2-DOWN, 3-LEFT
         if(checkPlace()){

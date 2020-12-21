@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+</head>
+
+<body>
+    <div class="table">
+        <div class="row" th:each="row: ${rivalGrid}">
+            <div class="rival-cell" th:classappend="${cell.getRivalStatus()}" th:each="cell: ${row}" th:text="${cell.getXY()}" th:id="${cell.getXY()}" th:x="${cell.getPosX()}" th:y="${cell.getPosY()}">
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="/resources/script/main.js"></script>
+</html>

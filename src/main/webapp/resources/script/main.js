@@ -24,3 +24,40 @@ $( function() {
         }
     });
 } );
+
+$(document).ready(function() {
+    $(".rival-cell").click(function(){
+/*
+        console.log("hello" + $(this).attr('x') + $(this).attr('y'))
+        const Http = new XMLHttpRequest();
+        const url='/game/shoot?x='+ $(this).attr('x') + '&y='+ $(this).attr('y');
+        //const url='/game';
+        Http.open("GET", url);
+        Http.send();
+
+        Http.onreadystatechange = (e) => {
+            console.log(Http.responseText);
+            //$(".rivalfield").replaceWith(Http.responseText);
+        }
+
+ */
+        $( ".rivalfield" ).load( '/game/shoot?x='+ $(this).attr('x') + '&y='+ $(this).attr('y') );
+        $.get("status", function(data, status){
+            switch(data){
+                case "Miss" :
+                    $( ".message" ).text("PROMAH PEREDAVAY HOD!");
+                    $( ".message" ).after('<form method="get" action="http://localhost:8080/game/giveTurn"><button type="submit">Continue</button></form>')
+                    break;
+                case "Wound" :
+                    $( ".message" ).text("POPAL! KRASAVA");
+                    break;
+                case "Kill" :
+                    $( ".message" ).text("UBIL! 4TO TVORISH???");
+                    break;
+                case "Win" :
+                    $( ".message" ).text("POBEDA! MALACA!");
+                    break;
+            }
+        });
+    });
+});

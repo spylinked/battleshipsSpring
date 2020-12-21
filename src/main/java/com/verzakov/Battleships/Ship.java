@@ -121,5 +121,4 @@ public class Ship {
             shipCells[i] = field.getCellGrid()[shipPos[i][0]][shipPos[i][1]];
         }
     }
-
 }

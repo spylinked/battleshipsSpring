@@ -14,21 +14,34 @@ Player 1 name:<p th:text = "${p1name}"/>
 Player 2 name:<p th:text = "${p2name}"/>
 
 
-    <!--/*@thymesVar id="cellGrid" type="com.verzakov.Battleships.Cell"*/-->
+    <!--/*@thymesVar id="myField" type="com.verzakov.Battleships.Cell"*/-->
 <div class="wrapper">
-    <div class="table-wrapper">
+    <div class="myfield">
         <div class="table">
-            <div class="row" th:each="row: ${cellGrid}">
-                <div class="cell" th:classappend="${cell.getStatus()}" th:each="cell: ${row}" th:text="${cell.getXY()}" th:id="${cell.getXY()}">
+            <div class="row" th:each="row: ${myGrid}">
+                <div class="cell" th:classappend="${cell.getStatus()}" th:each="cell: ${row}" th:text="${cell.getXY()}" th:id="${cell.getXY()}" th:x="${cell.getPosX()}" th:y="${cell.getPosY()}">
                 </div>
             </div>
         </div>
     </div>
-    <div class="port">
+    <div class="rivalfield">
+        <div class="table">
+            <div class="row" th:each="row: ${rivalGrid}">
+                <div class="rival-cell" th:classappend="${cell.getRivalStatus()}" th:each="cell: ${row}" th:text="${cell.getXY()}" th:id="${cell.getXY()}" th:x="${cell.getPosX()}" th:y="${cell.getPosY()}">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="message">
+        SHOOT!
+    </div>
+
+<!--    <div class="port">
         <div class="port-ship" th:each="ship: ${ships}" th:style="'width:' + ${ship.getSize()*2} + 'em;'">
             <div class="ship-box" th:style="'width:' + ${ship.getSize()*2} + 'em;'"></div>
         </div>
-    </div>
+    </div>-->
+
 </div>
 
 </body>
