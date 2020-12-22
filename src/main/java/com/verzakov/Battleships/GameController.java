@@ -20,19 +20,31 @@ public class GameController {
         return "game";
     }
     @GetMapping("/start")
-    public String Start(@RequestParam String p1name, @RequestParam String p2name, Model model){
+    public String Start(@RequestParam String p1name, @RequestParam String p2name, @RequestParam Boolean p1bot, @RequestParam Boolean p2bot, Model model){
         //game.addPlayer(new Bot(p1name));
-        game.addPlayer(new Human(p1name));
+        if(p1bot)
+            game.addPlayer(new Bot(p1name));
+        else
+            game.addPlayer(new Human(p1name));
         game.getPlayersList().get(0).placeShips();
-        game.addPlayer(new Human(p2name));
+        if(p2bot)
+            game.addPlayer(new Bot(p2name));
+        else
+            game.addPlayer(new Human(p2name));
         game.getPlayersList().get(1).placeShips();
-
-        model.addAttribute("p1name",game.getPlayersList().get(0).getName());
-        model.addAttribute("p2name",game.getPlayersList().get(1).getName());
 
         Collections.shuffle(game.getPlayersList());
 
+        System.out.println(game.getPlayersList().get(0).getClass().getSimpleName());
+        System.out.println(game.getPlayersList().get(1).getClass().getSimpleName());
+
+        if(game.getPlayersList().get(0).getClass().getSimpleName().equals("Bot")) {
+            game.getPlayersList().get(0).shoot(game.getPlayersList().get(1));
+            Collections.shuffle(game.getPlayersList());
+        }
+
         //game.getPlayersList().get(0)
+        model.addAttribute("name",game.getPlayersList().get(0).getName());
         model.addAttribute("myGrid",game.getPlayersList().get(0).getField().getCellGrid());
         model.addAttribute("rivalGrid",game.getPlayersList().get(1).getField().getCellGrid());
         model.addAttribute("ships",game.getPlayersList().get(0).getField().getShipsList());
@@ -42,7 +54,9 @@ public class GameController {
     @GetMapping(value = "/shoot")
     public String Shoot(@RequestParam int x, @RequestParam int y, Model model){
         //game.addPlayer(new Bot(p1name));
-        game.getPlayersList().get(1).getField().shoot(x,y);
+        if(game.getLastShotStatus() != 0 && game.getLastShotStatus() != 2) {
+            game.setLastShotStatus(game.getPlayersList().get(1).getField().shoot(x, y));
+        }
         model.addAttribute("rivalGrid",game.getPlayersList().get(1).getField().getCellGrid());
         return "rivalField";
     }
@@ -50,7 +64,8 @@ public class GameController {
     @GetMapping(value = "/status")
     @ResponseBody
     public String GetLastShotStatus(){
-        return game.getPlayersList().get(1).getField().getLastShotStatus();
+        //return "{\""+game.getLastShotStatus()+"\":\"" + game.getPlayersList().get(1).getClass().getSimpleName() +"\"}";
+        return "{\"status\":"+game.getLastShotStatus()+", \"next\":\"" + game.getPlayersList().get(1).getClass().getSimpleName() + "\"}";
     }
 
     @GetMapping(value = "/giveTurn")
@@ -61,11 +76,24 @@ public class GameController {
 
     @GetMapping(value = "/takeTurn")
     public String takeTurn(Model model){
-        model.addAttribute("p1name",game.getPlayersList().get(0).getName());
-        model.addAttribute("p2name",game.getPlayersList().get(1).getName());
+        game.setLastShotStatus(-1);
 
         Collections.swap(game.getPlayersList(), 0, 1);
+        model.addAttribute("name",game.getPlayersList().get(0).getName());
+        model.addAttribute("myGrid",game.getPlayersList().get(0).getField().getCellGrid());
+        model.addAttribute("rivalGrid",game.getPlayersList().get(1).getField().getCellGrid());
+        model.addAttribute("ships",game.getPlayersList().get(0).getField().getShipsList());
+        return "start";
+    }
+    @GetMapping(value = "/botTurn")
+    public String botTurn(Model model){
+        game.setLastShotStatus(-1);
 
+        Collections.swap(game.getPlayersList(), 0, 1);
+        //game.setLastShotStatus(game.getPlayersList().get(0).shoot(game.getPlayersList().get(1)));
+        game.getPlayersList().get(0).shoot(game.getPlayersList().get(1));
+        Collections.swap(game.getPlayersList(), 0, 1);
+        model.addAttribute("name",game.getPlayersList().get(0).getName());
         model.addAttribute("myGrid",game.getPlayersList().get(0).getField().getCellGrid());
         model.addAttribute("rivalGrid",game.getPlayersList().get(1).getField().getCellGrid());
         model.addAttribute("ships",game.getPlayersList().get(0).getField().getShipsList());

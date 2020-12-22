@@ -6,7 +6,7 @@ import java.util.List;
 public class BattleField{
     private Cell[][] cellGrid = new Cell[10][10];
     private List<Ship> shipsList= new ArrayList<Ship>();
-    private String lastShotStatus= "";
+    //private String lastShotStatus= "";
 
     public BattleField() {
         for (int i = 0; i < cellGrid.length; i++) {
@@ -30,10 +30,12 @@ public class BattleField{
     public Cell[][] getCellGrid() {
         return cellGrid;
     }
-
+/*
     public String getLastShotStatus() {
         return lastShotStatus;
     }
+
+ */
 
     public List<Ship> getShipsList() {
         return shipsList;
@@ -57,21 +59,23 @@ public class BattleField{
             if (this.getCellGrid()[X][Y].getShip().isDestroyed()){
                 this.getCellGrid()[X][Y].getShip().fillAreaAround();
                 System.out.println("Убит!");
-                lastShotStatus = "Kill";
+                //lastShotStatus = "Kill";
                 if(getAliveShips() == 0) {
                     System.out.println("Вы победили!");
-                    lastShotStatus = "Win";
+                    //lastShotStatus = "Win";
                     return 2;
+                } else {
+                    return 3;
                 }
             } else {
                 this.getCellGrid()[X][Y].fillDiagonal();
                 System.out.println("Ранен!");
-                lastShotStatus = "Wound";
+                //lastShotStatus = "Wound";
             }
             return 1;
         }
         System.out.println("Мимо!");
-        lastShotStatus = "Miss";
+        //lastShotStatus = "Miss";
         return 0;
 
     }

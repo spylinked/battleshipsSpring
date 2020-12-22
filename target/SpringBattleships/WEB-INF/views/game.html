@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <head>
     <meta charset="utf-8">
     <title>My app</title>
 </head>
 
 <body>
-<form action="../game/start" target="_blank">
-
-    <p>Player 1 name: <input type="text" name="p1name"></p>
-    <p>Player 2 name: <input type="text" name="p2name"></p>
-    <p><input type="submit" value="Send data"></p>
-
-</form>
+    <p>Player 1 name: <input type="text" id="p1name"> BOT:<input type="checkbox" id="p1bot"></p>
+    <p>Player 2 name: <input type="text" id="p2name"> BOT:<input type="checkbox" id="p2bot"></p>
+    <button class="start">START</button>
 </body>
+<script type="text/javascript" src="/resources/script/main.js"></script>
+<link rel="stylesheet" href="/resources/style/main.css">
 </html>

@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <head>
     <meta charset="ISO-8859-1">
     <title>My app</title>
@@ -10,8 +7,7 @@
 
 <body>
 
-Player 1 name:<p th:text = "${p1name}"/>
-Player 2 name:<p th:text = "${p2name}"/>
+HOD IGROKA :<p th:text = "${name}"/>
 
 
     <!--/*@thymesVar id="myField" type="com.verzakov.Battleships.Cell"*/-->
@@ -19,7 +15,7 @@ Player 2 name:<p th:text = "${p2name}"/>
     <div class="myfield">
         <div class="table">
             <div class="row" th:each="row: ${myGrid}">
-                <div class="cell" th:classappend="${cell.getStatus()}" th:each="cell: ${row}" th:text="${cell.getXY()}" th:id="${cell.getXY()}" th:x="${cell.getPosX()}" th:y="${cell.getPosY()}">
+                <div class="cell" th:classappend="${cell.getStatus()}" th:each="cell: ${row}" th:id="${cell.getXY()}" th:x="${cell.getPosX()}" th:y="${cell.getPosY()}">
                 </div>
             </div>
         </div>
@@ -27,7 +23,7 @@ Player 2 name:<p th:text = "${p2name}"/>
     <div class="rivalfield">
         <div class="table">
             <div class="row" th:each="row: ${rivalGrid}">
-                <div class="rival-cell" th:classappend="${cell.getRivalStatus()}" th:each="cell: ${row}" th:text="${cell.getXY()}" th:id="${cell.getXY()}" th:x="${cell.getPosX()}" th:y="${cell.getPosY()}">
+                <div class="rival-cell" th:classappend="${cell.getRivalStatus()}" th:each="cell: ${row}" th:id="${cell.getXY()}" th:x="${cell.getPosX()}" th:y="${cell.getPosY()}">
                 </div>
             </div>
         </div>
@@ -35,6 +31,8 @@ Player 2 name:<p th:text = "${p2name}"/>
     <div class="message">
         SHOOT!
     </div>
+    <button class="giveTurn" style="display: none">GIVE TURN</button>
+
 
 <!--    <div class="port">
         <div class="port-ship" th:each="ship: ${ships}" th:style="'width:' + ${ship.getSize()*2} + 'em;'">
@@ -45,6 +43,5 @@ Player 2 name:<p th:text = "${p2name}"/>
 </div>
 
 </body>
-<script type="text/javascript" src="/resources/script/main.js"></script>
 <link rel="stylesheet" href="/resources/style/main.css">
 </html>
